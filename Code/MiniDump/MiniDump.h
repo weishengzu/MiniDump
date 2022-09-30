@@ -18,8 +18,8 @@ private:
 	~MiniDump();
 
 public:
-	// ³ÌĞò±ÀÀ£Ê±ÊÇ·ñÆô¶¯×Ô¶¯Éú³ÉdumpÎÄ¼ş;
-	// Ö»ĞèÒªÔÚmainº¯Êı¿ªÊ¼´¦µ÷ÓÃ¸Ãº¯Êı¼´¿É;
+	// ç¨‹åºå´©æºƒæ—¶æ˜¯å¦å¯åŠ¨è‡ªåŠ¨ç”Ÿæˆdumpæ–‡ä»¶;
+	// åªéœ€è¦åœ¨mainå‡½æ•°å¼€å§‹å¤„è°ƒç”¨è¯¥å‡½æ•°å³å¯;
 	static void EnableAutoDump(bool bEnable = true);
 
 private:

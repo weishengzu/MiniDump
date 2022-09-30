@@ -51,7 +51,7 @@ void main()
 		break;
 	default:
 		{
-			std::string strTemp = "ÕâÊÇÆæİâ£¬²»ÔÚÁùµÀÂÖ»ØÖ®ÄÚ";
+			std::string strTemp = "è¿™æ˜¯å¥‡è‘©ï¼Œä¸åœ¨å…­é“è½®å›ä¹‹å†…";
 		}
 		break;
 	}
