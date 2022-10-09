@@ -1,7 +1,7 @@
 /*
  * @Author: shengzu@wei
  * @Date: 2022-09-30 16:17:22
- * @LastEditTime: 2022-09-30 17:56:28
+ * @LastEditTime: 2022-10-09 16:06:45
  * @LastEditors: shengzu@wei
  * @Description:
  */
@@ -13,7 +13,6 @@
 #include <windows.h>
 
 #include <ctime>
-#include <filesystem>
 #include <iostream>
 #include <string>
 #include <dbghelp.h>
@@ -40,8 +39,4 @@ class MiniDump {
 
   static void CreateDumpFile(LPCSTR lpstrDumpFilePathName,
                              EXCEPTION_POINTERS *pException);
-
-  static std::string GetCurrentDateTime();
-
-  static std::string GetminiDumpDir();
 };

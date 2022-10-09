@@ -1,6 +1,4 @@
-#include "MiniDump.h"
-
-namespace fs = std::filesystem;
+#include "minidump.h"
 
 MiniDump::MiniDump() {}
 
@@ -19,13 +17,16 @@ LONG MiniDump::ApplicationCrashHandler(EXCEPTION_POINTERS *pException) {
           return EXCEPTION_CONTINUE_SEARCH;
   }*/
 
+  TCHAR szDumpDir[MAX_PATH] = {0};
   TCHAR szDumpFile[MAX_PATH] = {0};
   TCHAR szMsg[MAX_PATH] = {0};
   SYSTEMTIME stTime = {0};
-  auto dumpPath = GetminiDumpDir().c_str();
-  auto nextMinidumpId = GetCurrentDateTime().c_str();
+  GetLocalTime(&stTime);
+  ::GetCurrentDirectory(MAX_PATH, szDumpDir);
   // 构建dump文件路径;
-  TSprintf(szDumpFile, "%s\\%s.dmp", dumpPath, nextMinidumpId);
+  TSprintf(szDumpFile, _T("%s\\%04d-%02d-%02d %02d-%02d-%02d.dmp"), szDumpDir,
+           stTime.wYear, stTime.wMonth, stTime.wDay, stTime.wHour,
+           stTime.wMinute, stTime.wSecond);
   // 创建dump文件;
   CreateDumpFile(szDumpFile, pException);
 
@@ -52,26 +53,4 @@ void MiniDump::CreateDumpFile(LPCSTR strPath, EXCEPTION_POINTERS *pException) {
   MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), hDumpFile,
                     MiniDumpNormal, &dumpInfo, NULL, NULL);
   CloseHandle(hDumpFile);
-}
-
-std::string MiniDump::GetCurrentDateTime() {
-  std::time_t timep;
-  std::time(&timep);
-  char tmp[64];
-  strftime(tmp, sizeof(tmp), "%Y-%m-%d %H-%M-%S", std::localtime(&timep));
-  return tmp;
-}
-
-std::string MiniDump::GetminiDumpDir() {
-  std::string dump_dir = fs::current_path().string().append("/minidump");
-  fs::path dump_path_dir(dump_dir);
-  try {
-    if (!fs::exists(dump_path_dir)) {
-      fs::create_directories(dump_path_dir);
-    }
-  } catch (const fs::filesystem_error &ex) {
-    std::cout << "path create failed: " << ex.what()
-              << " path is: " << dump_path_dir << std::endl;
-  }
-  return dump_dir;
 }
